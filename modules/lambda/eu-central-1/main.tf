@@ -56,23 +56,7 @@ module "lambda_courses" {
 
     create_role = false
     lambda_role = var.lambda_courses_role_arn
-
-  #   attach_policy_statements = true
-  # policy_statements = {
-  #   dynamodb = {
-  #     effect    = "Allow",
-  #     actions   = ["dynamodb:Scan"],
-  #     resources = [var.table_courses_arn]
-  #   }
-  #   s3_read = {
-  #     effect    = "Deny",
-  #     actions   = ["s3:HeadObject", "s3:GetObject"],
-  #     resources = ["arn:aws:s3:::my-bucket/*"]
-  #   }
-  # }
-
     tags        = module.label_courses.tags
-
 }
 
 module "label_get_course" {
