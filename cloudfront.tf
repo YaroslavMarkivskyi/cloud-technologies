@@ -1,5 +1,7 @@
 module "cdn" {
   source = "terraform-aws-modules/cloudfront/aws"
+  version             = "3.2.1"
+  default_root_object = "index.html"
 
 #   aliases = ["cdn.example.com"]
 
@@ -38,21 +40,17 @@ module "cdn" {
     query_string    = true
   }
 
-#   ordered_cache_behavior = [
-#     {
-#       path_pattern           = "/static/*"
-#       target_origin_id       = "s3_one"
-#       viewer_protocol_policy = "redirect-to-https"
-
-#       allowed_methods = ["GET", "HEAD", "OPTIONS"]
-#       cached_methods  = ["GET", "HEAD"]
-#       compress        = true
-#       query_string    = true
-#     }
-#   ]
-
-#   viewer_certificate = {
-#     acm_certificate_arn = "arn:aws:acm:us-east-1:135367859851:certificate/1032b155-22da-4ae0-9f69-e206f825458b"
-#     ssl_support_method  = "sni-only"
-#   }
+    custom_error_response = [
+    {
+      error_code            = 404
+      response_code         = 200
+      response_page_path    = "/index.html"
+      error_caching_min_ttl = 10
+    },
+    {
+      error_code            = 403
+      response_code         = 200
+      response_page_path    = "/index.html"
+      error_caching_min_ttl = 10
+  }]
 }
